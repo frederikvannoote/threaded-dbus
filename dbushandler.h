@@ -1,8 +1,7 @@
-#ifndef DBUSHANDLER_H
-#define DBUSHANDLER_H
+#pragma once
 
 #include <QObject>
-#include <QThread>
+#include <QPointer>
 class MyObject;
 
 
@@ -10,13 +9,13 @@ class DBusHandler : public QObject
 {
     Q_OBJECT
 public:
-    explicit DBusHandler(QObject *parent = nullptr);
-    virtual ~DBusHandler();
+    explicit DBusHandler(MyObject &myObject, QObject *parent = nullptr);
 
-    void start(MyObject &myObject);
+    void start();
+
+Q_SIGNALS:
+    void finished();
 
 private:
-    QThread m_thread;
+    MyObject &m_myObject;
 };
-
-#endif // DBUSHANDLER_H

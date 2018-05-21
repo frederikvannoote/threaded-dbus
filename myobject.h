@@ -2,6 +2,8 @@
 #define MYOBJECT_H
 
 #include <QObject>
+#include <QMutex>
+
 
 class MyObject : public QObject
 {
@@ -11,7 +13,10 @@ public:
 
     void someMethod();
 
+    bool isLocked() const;
 
+private:
+    mutable QMutex m_mutex;
 };
 
 #endif // MYOBJECT_H

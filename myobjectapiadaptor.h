@@ -32,7 +32,11 @@ class ExampleAdaptor: public QDBusAbstractAdaptor
     Q_CLASSINFO("D-Bus Interface", "org.example")
     Q_CLASSINFO("D-Bus Introspection", ""
 "  <interface name=\"org.example\">\n"
+"    <property access=\"read\" type=\"b\" name=\"locked\"/>\n"
 "    <method name=\"someMethod\"/>\n"
+"    <method name=\"isLocked\">\n"
+"      <arg direction=\"out\" type=\"b\"/>\n"
+"    </method>\n"
 "  </interface>\n"
         "")
 public:
@@ -40,7 +44,11 @@ public:
     virtual ~ExampleAdaptor();
 
 public: // PROPERTIES
+    Q_PROPERTY(bool locked READ locked)
+    bool locked() const;
+
 public Q_SLOTS: // METHODS
+    bool isLocked();
     void someMethod();
 Q_SIGNALS: // SIGNALS
 };

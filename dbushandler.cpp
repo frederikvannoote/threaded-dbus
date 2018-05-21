@@ -4,27 +4,17 @@
 #include "myobjectapiadaptor.h"
 
 
-DBusHandler::DBusHandler(QObject *parent) :
+DBusHandler::DBusHandler(MyObject &myObject, QObject *parent) :
     QObject(parent),
-    m_thread()
+    m_myObject(myObject)
 {
-    // Run this object in the context of it's own thread.
-    m_thread.start();
-    moveToThread(&m_thread);
 }
 
-DBusHandler::~DBusHandler()
-{
-    // Quit the thread and wait for it to join.
-    m_thread.quit();
-    m_thread.wait();
-}
-
-void DBusHandler::start(MyObject &myObject)
+void DBusHandler::start()
 {
     // Create this API object which converts the interface of MyObject
     // into something d-bus friendly.
-    MyObjectAPI *myObjectApi = new MyObjectAPI(myObject);
+    MyObjectAPI *myObjectApi = new MyObjectAPI(m_myObject);
     new ExampleAdaptor(myObjectApi);
 
     QDBusConnection::sessionBus().registerObject("/example", myObjectApi);

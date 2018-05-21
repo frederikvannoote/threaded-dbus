@@ -33,6 +33,20 @@ ExampleAdaptor::~ExampleAdaptor()
     // destructor
 }
 
+bool ExampleAdaptor::locked() const
+{
+    // get the value of property locked
+    return qvariant_cast< bool >(parent()->property("locked"));
+}
+
+bool ExampleAdaptor::isLocked()
+{
+    // handle method call org.example.isLocked
+    bool out0;
+    QMetaObject::invokeMethod(parent(), "isLocked", Q_RETURN_ARG(bool, out0));
+    return out0;
+}
+
 void ExampleAdaptor::someMethod()
 {
     // handle method call org.example.someMethod
